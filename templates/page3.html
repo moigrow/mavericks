@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mavericks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center; /* Center the content */
+        }
+
+        /* Make the container fit the content width */
+        .container {
+            max-width: 100%; /* Limit container to full screen width */
+            margin: 0 auto;  /* Center the container */
+            display: flex;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh; /* Full height */
+            transition: transform 0.3s ease; /* Smooth transition */
+            transform: translateX(0); /* Initial position */
+        }
+
+        /* Class to hide the sidebar */
+        .sidebar.hidden {
+            transform: translateX(-100%); /* Hide sidebar */
+        }
+
+        .toggle-btn {
+            background-color: #333; /* Button color */
+            color: white; /* Text color */
+            border: none; /* Remove border */
+            padding: 10px; /* Padding for button */
+            cursor: pointer; /* Pointer cursor */
+            position: fixed; /* Position fixed to screen */
+            left: 10px; /* Align left */
+            top: 20px; /* Position from the top */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        .sidebar h2 {
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Content layout */
+        .content {
+            margin-left: 270px; /* Leave space for the sidebar + extra space */
+            padding: 20px;
+            transition: margin-left 0.3s ease; /* Smooth transition for margin */
+        }
+
+        /* Adjust content margin when sidebar is hidden */
+        .content.shift {
+            margin-left: 0; /* Remove left margin */
+        }
+
+        /* Banner image styles */
+        #bannerImage {
+            width: 100%; /* Full width of the screen */
+            height: auto; /* Adjust height automatically based on the width */
+            display: block; /* Center the image */
+            margin-bottom: 20px; /* Space between the image and content */
+        }
+
+        /* Thumbnail bar */
+        .thumbnail-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .thumbnail-bar img {
+            width: 100px; /* Set thumbnail width */
+            height: auto; /* Maintain aspect ratio */
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.3s; /* Smooth zoom effect */
+        }
+
+        .thumbnail-bar img:hover {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+        }
+
+        /* Flipbook container */
+        .flipbook-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        /* Flipbook image styles */
+        #flipbookImage {
+            max-width: 100%; /* Ensure the image does not exceed the width of the banner */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation buttons */
+        .navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #prevButton {
+            left: 0;
+        }
+
+        #nextButton {
+            right: 0;
+        }
+
+        .navigation button {
+            position: absolute;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            opacity: 0.8;
+        }
+
+        .navigation button:hover {
+            opacity: 1;
+        }
+
+        .navigation button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">&#9776;</button> <!-- Button to toggle sidebar -->
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <h2>Explore</h2>
+            <ul>
+                <li><a href="/">The Mavericks</a></li>
+                <li><a href="/page2">Comic</a></li>
+                <li><a href="/page3">Researcher's Diary</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="content" id="content">
+            <!-- Banner Image -->
+            <img id="bannerImage" src="/static/images/diary.png" alt="Diary Banner">
+
+            <!-- Thumbnail Bar -->
+            <div class="thumbnail-bar">
+                <img src="/static/images/11.png" alt="Page 1" onclick="goToPage(0)">
+                <img src="/static/images/22.png" alt="Page 2" onclick="goToPage(1)">
+                <img src="/static/images/33.png" alt="Page 3" onclick="goToPage(2)">
+                <img src="/static/images/44.png" alt="Page 4" onclick="goToPage(3)">
+                <img src="/static/images/55.png" alt="Page 5" onclick="goToPage(4)">
+                <img src="/static/images/66.png" alt="Page 6" onclick="goToPage(5)">
+                <img src="/static/images/77.png" alt="Page 7" onclick="goToPage(6)">
+                <img src="/static/images/88.png" alt="Page 8" onclick="goToPage(7)">
+                <img src="/static/images/1111.png" alt="Page 9" onclick="goToPage(8)">
+                <img src="/static/images/1212.png" alt="Page 10" onclick="goToPage(9)">
+                <img src="/static/images/1313.png" alt="Page 11" onclick="goToPage(10)">
+            </div>
+
+            <!-- Flipbook -->
+            <div class="flipbook-container">
+                <button id="prevButton" class="navigation" onclick="prevPage()" disabled>Previous</button>
+                <img id="flipbookImage" src="/static/images/11.png" alt="Page 1">
+                <button id="nextButton" class="navigation" onclick="nextPage()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Flipbook Functionality -->
+    <script>
+        // Array of images for the flipbook
+        const pages = [
+            "/static/images/11.png",
+            "/static/images/22.png",
+            "/static/images/33.png",
+            "/static/images/44.png",
+            "/static/images/55.png",
+            "/static/images/66.png",
+            "/static/images/77.png",
+            "/static/images/88.png",
+            "/static/images/1111.png",
+            "/static/images/1212.png",
+            "/static/images/1313.png"
+        ];
+
+        let currentPage = 0;
+
+        // Function to go to the previous page
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePage();
+            }
+        }
+
+        // Function to go to the next page
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updatePage();
+            }
+        }
+
+        // Function to go to a specific page from the thumbnail bar
+        function goToPage(pageIndex) {
+            currentPage = pageIndex;
+            updatePage();
+        }
+
+        // Function to update the flipbook image and buttons
+        function updatePage() {
+            document.getElementById("flipbookImage").src = pages[currentPage];
+
+            // Disable/enable navigation buttons based on the current page
+            document.getElementById("prevButton").disabled = currentPage === 0;
+            document.getElementById("nextButton").disabled = currentPage === pages.length - 1;
+        }
+
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            sidebar.classList.toggle('hidden'); // Toggle hidden class on sidebar
+            content.classList.toggle('shift'); // Toggle shift class on content
+        }
+    </script>
+</body>
+</html>
